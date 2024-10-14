@@ -102,3 +102,5 @@ typingform.addEventListener("submit", function (e) {
     e.preventDefault();
     handleOutGoingChat();
 });
+
+hello all
