@@ -104,3 +104,4 @@ typingform.addEventListener("submit", function (e) {
 });
 
 hello all
+helllo again to demo
