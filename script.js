@@ -103,6 +103,4 @@ typingform.addEventListener("submit", function (e) {
     handleOutGoingChat();
 });
 
-hello all
-helllo again to demo
-third changes
+
