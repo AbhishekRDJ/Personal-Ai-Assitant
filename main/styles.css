@@ -89,17 +89,34 @@ body {
 }
 
 .sidebar ul li {
+  /* background-color: red; */
   margin-bottom: 15px;
   cursor: pointer;
   padding: 10px;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+
 .sidebar ul li:hover {
   background-color: #444;
   transform: scale(1.05);
   border-radius: 5px;
 }
+/* Target the anchor inside the list item */
+.nev ul li a {
+  display: block;  /* Make the anchor behave like a block element to fill the entire li */
+  color: inherit;  /* Inherit the color from the li */
+  text-decoration: none;  /* Remove the default underline */
+  padding: 10px;  /* Ensure the anchor has the same padding as the li */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nev ul li:hover a {
+  background-color: #444;  /* Ensure the hover effect applies to the anchor */
+  transform: scale(1.05);  /* Scale effect on hover */
+  border-radius: 5px;
+}
+
 
 .sidebar-bottom {
   margin-top: 20px;
