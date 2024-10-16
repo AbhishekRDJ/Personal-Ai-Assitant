@@ -1,12 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pricing Page</title>
     <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
-    
+    <section class="pricing-section">
+        <h1>One tool for your whole company.<br> Free for teams to try.</h1>
+        <div class="trusted-companies">
+            <span>Uber</span>
+            <span>Figma</span>
+            <span>Amazon</span>
+            <span>Toyota</span>
+            <span>Snowflake</span>
+            <span>1Password</span>
+        </div>
+        <div class="toggle-section">
+            <button>Pay Monthly</button>
+            <button class="yearly-btn">Pay Yearly <span>save 20%</span></button>
+        </div>
+        <div class="night_mode">
+            <button><i class="fa-solid fa-circle-half-stroke"></i></button>
+        </div>
+
+        <div class="pricing-cards">
+            <!-- Free Plan -->
+            <div class="card">
+                <h2>Free</h2>
+                <p>€0</p>
+                <button class="btn">Sign up</button>
+                <ul>
+                    <li>Collaborative workspace</li>
+                    <li>Integrate with Slack, GitHub & more</li>
+                    <li>Basic page analytics</li>
+                    <li>7 day page history</li>
+                    <li>Invite 10 guests</li>
+                </ul>
+            </div>
+
+            <!-- Plus Plan -->
+            <div class="card popular">
+                <h2>Plus</h2>
+                <p>€9.50 <span>per seat/month</span></p>
+                <button class="btn">Get started</button>
+                <ul>
+                    <li>Everything in Free +</li>
+                    <li>Unlimited blocks for teams</li>
+                    <li>Unlimited file uploads</li>
+                    <li>30 day page history</li>
+                    <li>Invite 100 guests</li>
+                    <li>Synced databases with 3rd party apps</li>
+                    <li>Custom websites</li>
+                    <li>Charts & dashboards</li>
+                </ul>
+            </div>
+
+            <!-- Business Plan -->
+            <div class="card">
+                <h2>Business</h2>
+                <p>€14 <span>per seat/month</span></p>
+                <button class="btn">Get started</button>
+                <ul>
+                    <li>Everything in Plus +</li>
+                    <li>SAML SSO</li>
+                    <li>Private teamspaces</li>
+                    <li>Bulk PDF export</li>
+                    <li>Advanced page analytics</li>
+                    <li>90 day page history</li>
+                    <li>Invite 250 guests</li>
+                </ul>
+            </div>
+
+            <!-- Enterprise Plan -->
+            <div class="card">
+                <h2>Enterprise</h2>
+                <p>Contact Sales</p>
+                <button class="btn">Contact Sales</button>
+                <ul>
+                    <li>Everything in Business +</li>
+                    <li>User provisioning (SCIM)</li>
+                    <li>Advanced security & controls</li>
+                    <li>Audit log</li>
+                    <li>Customer success manager</li>
+                    <li>Workspace analytics</li>
+                    <li>Security & Compliance integrations</li>
+                    <li>Invite 250 guests</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 </body>
+
 </html>

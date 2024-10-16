@@ -1,0 +1,135 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.pricing-section {
+    text-align: center;
+    padding: 50px;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.trusted-companies {
+    margin-bottom: 20px;
+}
+
+.trusted-companies span {
+    margin: 0 10px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.toggle-section {
+    margin-bottom: 30px;
+}
+
+.toggle-section button {
+    border-radius: 50px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.toggle-section button:active{
+    transform: scale(0.95);  /* Shrinks the button slightly */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); 
+}
+.night_mode{
+    /* background-color: rebeccapurple; */
+    padding: 5px;
+    margin: 5px;
+    display: flex;
+    justify-content: right;
+}
+.night_mode button {
+    border-radius: 50px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.night_mode button:hover {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.night_mode button:active {
+    transform: scale(0.95);  /* Shrinks the button slightly */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);  /* Reduce shadow to give a pressed look */
+}
+
+.yearly-btn {
+    border-color: #000;
+}
+
+.yearly-btn span {
+    color: rgb(7, 156, 255);
+}
+
+.pricing-cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    width: 250px;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.card p span {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.card ul li {
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.popular {
+    border: 2px solid #007BFF;
+}
