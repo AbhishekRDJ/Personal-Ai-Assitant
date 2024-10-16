@@ -1,0 +1,150 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-container {
+    margin-left: auto;
+}
+header h1{
+    margin-left: 100px;
+
+
+}
+
+#search {
+    margin-right: 20px;
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.input-section {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+#todo-input {
+    width: 500px;
+    padding: 10px;
+    border: 1px solid #131111;
+    border-radius: 4px;
+}
+
+#add-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+#add-button:hover {
+    background-color: #45a049;
+}
+
+.table-section {
+    width: 80%;
+}
+
+#todo-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#todo-table th, #todo-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#todo-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+#todo-table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+#todo-table tbody tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+.delete-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+.delete-button:hover {
+    background-color: #c0392b;
+}
+
+td:last-child {
+    text-align: center;
+    width: 50px; /* Adjust this width as needed to make it proportionally smaller */
+}
+
+/* Notification styles */
+.notification {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+}
+
+.notification.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
+    animation: fadein 0.5s, fadeout 0.5s 1.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
