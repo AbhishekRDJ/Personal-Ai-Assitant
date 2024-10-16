@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add the To-Do List</title>
+    <link rel="stylesheet" href="todo_style.css">
+</head>
+<body>
+    <header>
+        <h1>Add the To-Do List</h1>
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Search To-Do List...">
+        </div>
+    </header>
+    <br>
+    <br>
+    <section class="input-section">
+        <input type="text" id="todo-input" placeholder="Enter a new to-do">
+        <button id="add-button">Add</button>
+    </section>
+    <section class="table-section">
+        <table id="todo-table">
+            <thead>
+                <tr>
+                    <th>To-Do Item</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- To-do items will appear here -->
+            </tbody>
+        </table>
+    </section>
+    
+    <div id="notification" class="notification"></div>
+
+    <script>
+        document.getElementById('add-button').addEventListener('click', addTodo);
+        document.getElementById('todo-input').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                addTodo();
+            }
+        });
+        document.getElementById('search').addEventListener('input', filterTodos);
+
+        function addTodo() {
+            var input = document.getElementById('todo-input').value;
+            if (input) {
+                var table = document.getElementById('todo-table').getElementsByTagName('tbody')[0];
+                var newRow = table.insertRow();
+                var cell1 = newRow.insertCell(0);
+                var cell2 = newRow.insertCell(1);
+                cell1.textContent = input;
+
+                var deleteButton = document.createElement('button');
+                deleteButton.textContent = '✖';
+                deleteButton.className = 'delete-button';
+                deleteButton.addEventListener('click', function() {
+                    table.deleteRow(newRow.rowIndex - 1);
+                    showNotification('Task deleted');
+                    saveTodos();
+                });
+                cell2.appendChild(deleteButton);
+
+                document.getElementById('todo-input').value = '';
+                showNotification('Task added');
+                saveTodos();
+            }
+        }
+
+        function showNotification(message) {
+            var notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(function() {
+                notification.classList.remove('show');
+            }, 2000);
+        }
+
+        function saveTodos() {
+            var todos = [];
+            var rows = document.getElementById('todo-table').getElementsByTagName('tbody')[0].rows;
+            for (var i = 0; i < rows.length; i++) {
+                todos.push(rows[i].cells[0].textContent);
+            }
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        function loadTodos() {
+            var todos = JSON.parse(localStorage.getItem('todos'));
+            if (todos) {
+                for (var i = 0; i < todos.length; i++) {
+                    var table = document.getElementById('todo-table').getElementsByTagName('tbody')[0];
+                    var newRow = table.insertRow();
+                    var cell1 = newRow.insertCell(0);
+                    var cell2 = newRow.insertCell(1);
+                    cell1.textContent = todos[i];
+
+                    var deleteButton = document.createElement('button');
+                    deleteButton.textContent = '✖';
+                    deleteButton.className = 'delete-button';
+                    deleteButton.addEventListener('click', function() {
+                        table.deleteRow(newRow.rowIndex - 1);
+                        showNotification('Task deleted');
+                        saveTodos();
+                    });
+                    cell2.appendChild(deleteButton);
+                }
+            }
+        }
+
+        function filterTodos() {
+            var filter = document.getElementById('search').value.toLowerCase();
+            var rows = document.getElementById('todo-table').getElementsByTagName('tbody')[0].rows;
+            for (var i = 0; i < rows.length; i++) {
+                var todoItem = rows[i].cells[0].textContent.toLowerCase();
+                if (todoItem.indexOf(filter) > -1) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+
+        // Load todos when the page is loaded
+        window.onload = loadTodos;
+    </script>
+</body>
+</html>
