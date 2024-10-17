@@ -137,6 +137,10 @@ function addVoiceMessage(voiceInput) {
 document.getElementById('account').addEventListener('click', function() {
     window.location.href = 'login/login.html'; // Redirect to login page
 });
+//my account btn
+document.getElementById('account_btn').addEventListener('click', function() {
+    window.location.href = 'login/login.html'; // Redirect to login page
+});
 
 // Clear chat functionality
 const chat_list_var = document.getElementById('chat_list');
