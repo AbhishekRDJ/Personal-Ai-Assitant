@@ -1,5 +1,6 @@
 const typingform = document.querySelector("#chat-form");
 const chat_list = document.querySelector(".chat-list");
+const textarea1 = document.getElementById('user-input');
 let userMessage = null;
 
 const textarea = document.getElementById('user-input');
@@ -46,25 +47,29 @@ function handleOutGoingChat() {
 }
 
 // Function to handle bot's response
-function handleIncomingChat(userMessage) {
-    const botResponse = getBotResponse(userMessage);
+async function handleIncomingChat(userMessage) {
+    try {
+        const botResponse = await getBotResponse(userMessage); // Wait for the promise to resolve
 
-    const html = `
-        <div class="message-content">
-            <i class="fa-solid fa-robot chat_icon"></i>
-            <p class="text"></p>
-        </div>`;
+        const html = `
+            <div class="message-content">
+                <i class="fa-solid fa-robot chat_icon"></i>
+                <p class="text"></p>
+            </div>`;
 
-    const incomingMessageDiv = createMessageElement(html, "incoming");
-    incomingMessageDiv.querySelector(".text").textContent = botResponse;
-    chat_list.appendChild(incomingMessageDiv);
+        const incomingMessageDiv = createMessageElement(html, "incoming");
+        incomingMessageDiv.querySelector(".text").textContent = botResponse;
+        chat_list.appendChild(incomingMessageDiv);
 
-    // Scroll to the bottom of the chat after receiving a message
-    chat_list.scrollTop = chat_list.scrollHeight;
+        // Scroll to the bottom of the chat after receiving a message
+        chat_list.scrollTop = chat_list.scrollHeight;
+    } catch (error) {
+        console.error("Error in bot response:", error);
+    }
 }
 
 // Simulated bot response
-function getBotResponse(userMessage) {
+async function getBotResponse(userMessage) {
   const lowerCaseMessage = userMessage.toLowerCase();
 
   if (lowerCaseMessage.includes("hello") || lowerCaseMessage.includes("hi")) {
@@ -83,17 +88,71 @@ function getBotResponse(userMessage) {
       return "I was created by a team of skilled developers to assist you!";
   } else if (lowerCaseMessage.includes("what can you do")) {
       return "I can chat with you, help with information, and much more! How can I assist today?";
-  } else if (lowerCaseMessage.includes("tell me a joke")) {
-      return "Why don't programmers like nature? It has too many bugs!";
-  } else if (lowerCaseMessage.includes("what's the weather")) {
-      return "I'm unable to check the weather at the moment, but you can try a weather app!";
-  } else if (lowerCaseMessage.includes("open youtube")) {
-      return "I'm unable to open websites, but you can visit YouTube by opening a browser!";
-  } else if (lowerCaseMessage.includes("tell me a fact")) {
+  }    else if (lowerCaseMessage.includes("tell me a fact")) {
       return "Did you know? The first computer virus was created in 1986!";
-  } else {
-      return "I'm not sure about that. Could you ask something else?";
   }
+  else if (lowerCaseMessage.includes('open youtube')) {
+      window.open('https://www.youtube.com', '_blank');
+      return('Opening YouTube...');
+} else if (lowerCaseMessage.includes('play music')) {
+    window.open('https://www.spotify.com'); // Example link
+    return('Playing some music...', 'assistant');
+} else if (lowerCaseMessage.includes('tell me a joke')) {
+    const jokes = [
+        "Why don’t skeletons fight each other? They don’t have the guts!",
+        "Why don’t eggs tell jokes? They’d crack each other up.",
+        "What do you call fake spaghetti? An impasta!"
+    ];
+    const joke = jokes[Math.floor(Math.random() * jokes.length)];
+    return(joke, 'assistant');
+    speakResponse(joke);
+} else if (lowerCaseMessage.includes('what is the weather today')) {
+    return('Today’s weather is sunny with a high of 25°C.', 'assistant');
+    speakResponse('Today’s weather is sunny with a high of 25°C.');
+} else if (lowerCaseMessage.includes('give me a quote')) {
+    const quotes = [
+        "The best time to plant a tree was 20 years ago. The second best time is now.",
+        "Don’t watch the clock; do what it does. Keep going.",
+        "Success is not how high you have climbed, but how you make a positive difference to the world."
+    ];
+    const quote = quotes[Math.floor(Math.random() * quotes.length)];vs
+    return(quote, 'assistant');
+    speakResponse(quote);
+} else if (lowerCaseMessage.includes('can you hear me') || lowerCaseMessage.includes('hello')) {
+    return('Yes, I can hear you loud and clear!', 'assistant');
+    speakResponse('Yes, I can hear you loud and clear!');
+} else if (lowerCaseMessage.includes('what is your name')) {
+    return("I'm your friendly voice assistant!", 'assistant');
+    speakResponse("I'm your friendly voice assistant!");
+} else if (lowerCaseMessage.includes('who made you')) {
+    return('I was created by Abhishek, your awesome developer!', 'assistant');
+    speakResponse('I was created by Abhishek, your awesome developer!');
+} else if (lowerCaseMessage.includes('what is the time')) {
+    const currentTime = new Date().toLocaleTimeString();
+    return(`The current time is ${currentTime}.`, 'assistant');
+    speakResponse(`The current time is ${currentTime}.`);
+} else if (lowerCaseMessage.includes('open google')) {
+    window.open('https://www.google.com', '_blank');
+    return('Opening Google...');
+} else if (lowerCaseMessage.includes('search for') && lowerCaseMessage.includes('on google')) {
+    const searchQuery = lowerCaseMessage.split('search for ')[1].split(' on google')[0];
+    window.open(`https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`, '_blank');
+    return(`Searching Google for "${searchQuery}"...`);
+} else if (lowerCaseMessage.includes('motivate me')) {
+    const motivations = [
+        "Believe you can and you're halfway there.",
+        "The only way to do great work is to love what you do.",
+        "Dream it. Wish it. Do it."
+    ];
+    const motivation = motivations[Math.floor(Math.random() * motivations.length)];
+    addMessage(motivation, 'assistant');
+    speakResponse(motivation);
+} else {
+    // If no specific command is recognized, send to Google Cloud Natural Language API
+    const response = await getGoogleResponse(userInput);
+    addMessage(response, 'assistant');
+    speakResponse(response);
+}
 }
 
 
@@ -101,6 +160,12 @@ function getBotResponse(userMessage) {
 typingform.addEventListener("submit", function (e) {
     e.preventDefault();
     handleOutGoingChat();
+});
+textarea1.addEventListener('keydown', function (e) {
+    if (e.key === "Enter" && !e.shiftKey) {  // Check if the "Enter" key was pressed (without Shift)
+        e.preventDefault(); // Prevent the default behavior of adding a new line
+        handleOutGoingChat(); // Call the same function as the submit button
+    }
 });
 
 // making account logo to login page redirect
