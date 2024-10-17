@@ -1,6 +1,7 @@
 const typingform = document.querySelector("#chat-form");
 const chat_list = document.querySelector(".chat-list");
 let userMessage = null;
+
 const textarea = document.getElementById('user-input');
 
 // Adjust the height of the textarea as the user types
@@ -87,8 +88,7 @@ function getBotResponse(userMessage) {
   } else if (lowerCaseMessage.includes("what's the weather")) {
       return "I'm unable to check the weather at the moment, but you can try a weather app!";
   } else if (lowerCaseMessage.includes("open youtube")) {
-      window.open("https://www.youtube.com", "_blank");
-      return "Opening YouTube...";
+      return "I'm unable to open websites, but you can visit YouTube by opening a browser!";
   } else if (lowerCaseMessage.includes("tell me a fact")) {
       return "Did you know? The first computer virus was created in 1986!";
   } else {
@@ -96,56 +96,26 @@ function getBotResponse(userMessage) {
   }
 }
 
+
 // Event listener for form submission
 typingform.addEventListener("submit", function (e) {
     e.preventDefault();
     handleOutGoingChat();
 });
 
-// Adding Voice Recognition for voice commands
-const voiceBtn = document.getElementById('voiceBtn'); // Assuming a microphone button exists
+// making account logo to login page redirect
 
-voiceBtn.addEventListener('click', () => {
-    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.lang = 'en-US';
-    recognition.start();
-
-    recognition.onresult = async (event) => {
-        const voiceInput = event.results[0][0].transcript;
-        addVoiceMessage(voiceInput);
-        handleIncomingChat(voiceInput); // Respond to the voice command as if it's text
-    };
-
-    recognition.onerror = (event) => {
-        console.error('Speech recognition error:', event.error);
-    };
-});
-
-function addVoiceMessage(voiceInput) {
-    const voiceHtml = `
-      <div class="message-content">
-          <i class="fa-regular fa-user chat_icon"></i>
-          <p class="text"></p>
-      </div>`;
-
-    const voiceMessageDiv = createMessageElement(voiceHtml, "outgoing");
-    voiceMessageDiv.querySelector(".text").textContent = voiceInput;
-    chat_list.appendChild(voiceMessageDiv);
-}
-
-// Redirect to login page
 document.getElementById('account').addEventListener('click', function() {
     window.location.href = 'login/login.html'; // Redirect to login page
-});
-//my account btn
-document.getElementById('account_btn').addEventListener('click', function() {
-    window.location.href = 'login/login.html'; // Redirect to login page
-});
+  });
 
-// Clear chat functionality
+//   clear chat button function
+
+// Getting the elements
 const chat_list_var = document.getElementById('chat_list');
 const clearButton = document.getElementById('clear_btn');
 
+// Adding an event listener to the clear button
 clearButton.addEventListener('click', () => {
-    chat_list_var.innerHTML = ''; // Clear all chat messages
+    chat_list_var.innerHTML = ''; // This will clear all chat messages inside chat_list
 });
