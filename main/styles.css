@@ -546,3 +546,12 @@ body {
     transform: scale(1);
   }
 }
+
+@media (max-width: 768px) {
+  .sidebar {
+      width: 200px;
+  }
+  .main-content {
+      margin-left: 200px;
+  }
+}

@@ -108,3 +108,14 @@ typingform.addEventListener("submit", function (e) {
 document.getElementById('account').addEventListener('click', function() {
     window.location.href = 'login/login.html'; // Redirect to login page
   });
+
+//   clear chat button function
+
+// Getting the elements
+const chat_list_var = document.getElementById('chat_list');
+const clearButton = document.getElementById('clear_btn');
+
+// Adding an event listener to the clear button
+clearButton.addEventListener('click', () => {
+    chat_list_var.innerHTML = ''; // This will clear all chat messages inside chat_list
+});
