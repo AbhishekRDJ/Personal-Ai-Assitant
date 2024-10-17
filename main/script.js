@@ -154,6 +154,28 @@ async function getBotResponse(userMessage) {
     speakResponse(response);
 }
 }
+async function getGoogleResponse(userInput) {
+    try {
+        // Send userInput to the Gemini API
+        const response = await fetch("https://gemini-api-url.com/v1/getResponse", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer YOUR_GEMINI_API_KEY" // Replace with your actual API key
+            },
+            body: JSON.stringify({ message: userInput }) // Sending user's query
+        });
+
+        const data = await response.json();
+        
+        // Assuming the Gemini API returns a field "response" with the desired information
+        return data.response || "Sorry, I don't have the information at the moment."; 
+    } catch (error) {
+        console.error("Error with Gemini API:", error);
+        return "Sorry, I couldn't process your request at the moment.";
+    }
+}
+
 
 
 // Event listener for form submission
