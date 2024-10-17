@@ -45,11 +45,7 @@ body {
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
-.social-login button :nth-child(2):hover{
-    
-        
-      
-}
+
   
   .google-btn {
     background-color: #f7f7f7;
