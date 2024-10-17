@@ -103,4 +103,8 @@ typingform.addEventListener("submit", function (e) {
     handleOutGoingChat();
 });
 
+// making account logo to login page redirect
 
+document.getElementById('account').addEventListener('click', function() {
+    window.location.href = 'login.html'; // Redirect to login page
+  });
