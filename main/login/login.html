@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="public/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+
+    <script>
+        import { initializeApp } from "firebase/app";
+        import { getAnalytics } from "firebase/analytics";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-auth.js";
+
+        // Firebase configuration (replace with your own credentials)
+        var firebaseConfig = {
+            apiKey: "AIzaSyA8WlodfZkwFW9zqGKRDCbQzfi5NPjqqUo",
+            authDomain: "personal-ai-assistant-ce14f.firebaseapp.com",
+            projectId: "personal-ai-assistant-ce14f",
+            storageBucket: "personal-ai-assistant-ce14f.appspot.com",
+            messagingSenderId: "149416185866",
+            appId: "1:149416185866:web:fbeab31237caed23758ff3"
+        };
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        // Google sign-in logic (frontend)
+        function googleSignIn() {
+            var provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(provider).then((result) => {
+                var user = result.user;
+                console.log('User signed in:', user.email);
+
+                // Send the user data to the server
+                fetch('/auth/google', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: user.email,
+                        uid: user.uid // You can send more user data if needed
+                    })
+                }).then(response => response.json())
+                    .then(data => {
+                        console.log('Server response:', data);
+                    }).catch((error) => {
+                        console.error('Error sending data to server:', error);
+                    });
+            }).catch((error) => {
+                console.error('Error signing in:', error);
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="login-container">
+        <h1>Think it. Make it.</h1>
+        <h2>Log in to your account</h2>
+
+        <div class="social-login">
+            <button class="google-btn">
+                <i class="fa-brands fa-google"></i>
+                <div>Continue with Google</div>
+            </button>
+            <button class="apple-btn">
+                <div>
+                    <i class="fa-brands fa-apple"></i>
+                </div>
+                <div>Continue with Apple</div>
+            </button>
+            <button class="sso-btn">
+                <div>
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <div>Single sign-on (SSO)</div>
+            </button>
+        </div>
+
+        <form action="/login" method="POST" class="login-form">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email address..." required>
+            <p class="note">Use an organization email to easily collaborate with teammates</p>
+            <button type="submit" class="continue-btn">Continue</button>
+        </form>
+    </div>
+    <script>
+        function googleSignIn() {
+            var provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(provider).then((result) => {
+                var user = result.user;
+                console.log('User signed in:', user.email);
+            }).catch((error) => {
+                console.error('Error signing in:', error);
+            });
+        }
+
+        document.querySelector('.google-btn').addEventListener('click', googleSignIn);
+    </script>
+</body>
+
+</html>

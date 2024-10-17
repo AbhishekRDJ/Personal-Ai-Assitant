@@ -106,5 +106,5 @@ typingform.addEventListener("submit", function (e) {
 // making account logo to login page redirect
 
 document.getElementById('account').addEventListener('click', function() {
-    window.location.href = 'login.html'; // Redirect to login page
+    window.location.href = 'login/login.html'; // Redirect to login page
   });
