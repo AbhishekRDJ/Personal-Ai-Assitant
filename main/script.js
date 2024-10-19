@@ -206,3 +206,4 @@ const clearButton = document.getElementById('clear_btn');
 clearButton.addEventListener('click', () => {
     chat_list_var.innerHTML = ''; // This will clear all chat messages inside chat_list
 });
+
