@@ -20,6 +20,15 @@ const createMessageElement = (content, className) => {
     div.innerHTML = content;
     return div;
 };
+function addMessage(message, sender) {
+    const chatContainer = document.getElementById('chat-container'); // Assuming you have a chat container element
+    const messageElement = document.createElement('div');
+
+    messageElement.classList.add('message', sender); // 'message' class for styling, 'user' or 'assistant' for sender type
+    messageElement.innerText = message;
+
+    chatContainer.appendChild(messageElement);
+}
 
 // Function to handle sending user's message
 function handleOutGoingChat() {
@@ -45,6 +54,46 @@ function handleOutGoingChat() {
         handleIncomingChat(userMessage);
     }, 1000); // Delay to simulate bot response
 }
+const API_key = "AIzaSyDbVgzGDQ9SbhrQh3ilUMTjNJq2KWJLv58";
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_key}`;
+
+const getGoogleResponse = async (userMessage) => {
+    const data = {
+        contents: [
+            {
+                parts: [
+                    {
+                        text: userMessage // Use the user's message here
+                    }
+                ]
+            }
+        ]
+    };
+    
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        console.log(responseData.candidates[0].content.parts[0].text)
+        return responseData.candidates[0].content.parts[0].text
+        // Here you should adapt how you extract the message from responseData
+        // This is just a placeholder. Replace with actual logic depending on response structure.
+        // return responseData.contents[0].parts[0].text || "No response text available."; 
+    } catch (error) {
+        console.error("Error fetching Google response:", error);
+        return "An error occurred while fetching the response.";
+    }
+};
 
 // Function to handle bot's response
 async function handleIncomingChat(userMessage) {
@@ -67,114 +116,122 @@ async function handleIncomingChat(userMessage) {
         console.error("Error in bot response:", error);
     }
 }
+// async function getGoogleResponse(prompt) {
+//     try {
+//         const response = await fetch('http://127.0.0.1:5000/get-gemini-response', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({ prompt: prompt })
+//         });
+
+//         // Check if the response is okay (status in the range 200-299)
+//         if (!response.ok) {
+//             const errorText = await response.text(); // Get error details from the response
+//             throw new Error(`Network response was not ok: ${response.status} - ${errorText}`);
+//         }
+
+//         // Parse the JSON data from the response
+//         const data = await response.json();
+//         return data;
+//     } catch (error) {
+//         console.error('Error fetching Google response:', error); // Log the error for debugging
+//         throw error; // Rethrow the error for further handling
+//     }
+// }
+
+
 
 // Simulated bot response
 async function getBotResponse(userMessage) {
-  const lowerCaseMessage = userMessage.toLowerCase();
+    const lowerCaseMessage = userMessage.toLowerCase();
 
-  if (lowerCaseMessage.includes("hello") || lowerCaseMessage.includes("hi")) {
-      return "Hello! Atom is here to assist you. How can I help today?";
-  } else if (lowerCaseMessage.includes("how are you")) {
-      return "I'm just a bot, but I'm functioning at full capacity! How about you?";
-  } else if (lowerCaseMessage.includes("thanks") || lowerCaseMessage.includes("thank you")) {
-      return "You're welcome! Feel free to ask me anything.";
-  } else if (lowerCaseMessage.includes("bye") || lowerCaseMessage.includes("goodbye")) {
-      return "Goodbye! Have a great day ahead!";
-  } else if (lowerCaseMessage.includes("help")) {
-      return "Sure! I'm here to help. What do you need assistance with?";
-  } else if (lowerCaseMessage.includes("what's your name")) {
-      return "I'm Atom, your virtual assistant!";
-  } else if (lowerCaseMessage.includes("who made you")) {
-      return "I was created by a team of skilled developers to assist you!";
-  } else if (lowerCaseMessage.includes("what can you do")) {
-      return "I can chat with you, help with information, and much more! How can I assist today?";
-  }    else if (lowerCaseMessage.includes("tell me a fact")) {
-      return "Did you know? The first computer virus was created in 1986!";
-  }
-  else if (lowerCaseMessage.includes('open youtube')) {
-      window.open('https://www.youtube.com', '_blank');
-      return('Opening YouTube...');
-} else if (lowerCaseMessage.includes('play music')) {
-    window.open('https://www.spotify.com'); // Example link
-    return('Playing some music...', 'assistant');
-} else if (lowerCaseMessage.includes('tell me a joke')) {
-    const jokes = [
-        "Why don’t skeletons fight each other? They don’t have the guts!",
-        "Why don’t eggs tell jokes? They’d crack each other up.",
-        "What do you call fake spaghetti? An impasta!"
-    ];
-    const joke = jokes[Math.floor(Math.random() * jokes.length)];
-    return(joke, 'assistant');
-    speakResponse(joke);
-} else if (lowerCaseMessage.includes('what is the weather today')) {
-    return('Today’s weather is sunny with a high of 25°C.', 'assistant');
-    speakResponse('Today’s weather is sunny with a high of 25°C.');
-} else if (lowerCaseMessage.includes('give me a quote')) {
-    const quotes = [
-        "The best time to plant a tree was 20 years ago. The second best time is now.",
-        "Don’t watch the clock; do what it does. Keep going.",
-        "Success is not how high you have climbed, but how you make a positive difference to the world."
-    ];
-    const quote = quotes[Math.floor(Math.random() * quotes.length)];vs
-    return(quote, 'assistant');
-    speakResponse(quote);
-} else if (lowerCaseMessage.includes('can you hear me') || lowerCaseMessage.includes('hello')) {
-    return('Yes, I can hear you loud and clear!', 'assistant');
-    speakResponse('Yes, I can hear you loud and clear!');
-} else if (lowerCaseMessage.includes('what is your name')) {
-    return("I'm your friendly voice assistant!", 'assistant');
-    speakResponse("I'm your friendly voice assistant!");
-} else if (lowerCaseMessage.includes('who made you')) {
-    return('I was created by Abhishek, your awesome developer!', 'assistant');
-    speakResponse('I was created by Abhishek, your awesome developer!');
-} else if (lowerCaseMessage.includes('what is the time')) {
-    const currentTime = new Date().toLocaleTimeString();
-    return(`The current time is ${currentTime}.`, 'assistant');
-    speakResponse(`The current time is ${currentTime}.`);
-} else if (lowerCaseMessage.includes('open google')) {
-    window.open('https://www.google.com', '_blank');
-    return('Opening Google...');
-} else if (lowerCaseMessage.includes('search for') && lowerCaseMessage.includes('on google')) {
-    const searchQuery = lowerCaseMessage.split('search for ')[1].split(' on google')[0];
-    window.open(`https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`, '_blank');
-    return(`Searching Google for "${searchQuery}"...`);
-} else if (lowerCaseMessage.includes('motivate me')) {
-    const motivations = [
-        "Believe you can and you're halfway there.",
-        "The only way to do great work is to love what you do.",
-        "Dream it. Wish it. Do it."
-    ];
-    const motivation = motivations[Math.floor(Math.random() * motivations.length)];
-    addMessage(motivation, 'assistant');
-    speakResponse(motivation);
-} else {
-    // If no specific command is recognized, send to Google Cloud Natural Language API
-    const response = await getGoogleResponse(userInput);
-    addMessage(response, 'assistant');
-    speakResponse(response);
-}
-}
-async function getGoogleResponse(userInput) {
-    try {
-        // Send userInput to the Gemini API
-        const response = await fetch("https://gemini-api-url.com/v1/getResponse", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer YOUR_GEMINI_API_KEY" // Replace with your actual API key
-            },
-            body: JSON.stringify({ message: userInput }) // Sending user's query
-        });
-
-        const data = await response.json();
-        
-        // Assuming the Gemini API returns a field "response" with the desired information
-        return data.response || "Sorry, I don't have the information at the moment."; 
-    } catch (error) {
-        console.error("Error with Gemini API:", error);
-        return "Sorry, I couldn't process your request at the moment.";
+    if (lowerCaseMessage.includes("hello") || lowerCaseMessage.includes("hi")) {
+        return "Hello! Atom is here to assist you. How can I help today?";
+    } else if (lowerCaseMessage.includes("how are you")) {
+        return "I'm just a bot, but I'm functioning at full capacity! How about you?";
+    } else if (lowerCaseMessage.includes("thanks") || lowerCaseMessage.includes("thank you")) {
+        return "You're welcome! Feel free to ask me anything.";
+    } else if (lowerCaseMessage.includes("bye") || lowerCaseMessage.includes("goodbye")) {
+        return "Goodbye! Have a great day ahead!";
+    } else if (lowerCaseMessage.includes("help")) {
+        return "Sure! I'm here to help. What do you need assistance with?";
+    } else if (lowerCaseMessage.includes("what's your name")) {
+        return "I'm Atom, your virtual assistant!";
+    } else if (lowerCaseMessage.includes("who made you")) {
+        return "I was created by a team of skilled developers to assist you!";
+    } else if (lowerCaseMessage.includes("what can you do")) {
+        return "I can chat with you, help with information, and much more! How can I assist today?";
+    } else if (lowerCaseMessage.includes("tell me a fact")) {
+        return "Did you know? The first computer virus was created in 1986!";
+    }
+    else if (lowerCaseMessage.includes('open youtube')) {
+        window.open('https://www.youtube.com', '_blank');
+        return ('Opening YouTube...');
+    } else if (lowerCaseMessage.includes('play music')) {
+        window.open('https://www.spotify.com'); // Example link
+        return ('Playing some music...');
+    } else if (lowerCaseMessage.includes('tell me a joke')) {
+        const jokes = [
+            "Why don’t skeletons fight each other? They don’t have the guts!",
+            "Why don’t eggs tell jokes? They’d crack each other up.",
+            "What do you call fake spaghetti? An impasta!"
+        ];
+        const joke = jokes[Math.floor(Math.random() * jokes.length)];
+        return (joke);
+        speakResponse(joke);
+    } else if (lowerCaseMessage.includes('what is the weather today')) {
+        return ('Today’s weather is sunny with a high of 25°C.', 'assistant');
+        speakResponse('Today’s weather is sunny with a high of 25°C.');
+    } else if (lowerCaseMessage.includes('give me a quote')) {
+        const quotes = [
+            "The best time to plant a tree was 20 years ago. The second best time is now.",
+            "Don’t watch the clock; do what it does. Keep going.",
+            "Success is not how high you have climbed, but how you make a positive difference to the world."
+        ];
+        const quote = quotes[Math.floor(Math.random() * quotes.length)]; vs
+        return (quote);
+        speakResponse(quote);
+    } else if (lowerCaseMessage.includes('can you hear me') || lowerCaseMessage.includes('hello')) {
+        return ('Yes, I can hear you loud and clear!');
+        speakResponse('Yes, I can hear you loud and clear!');
+    } else if (lowerCaseMessage.includes('what is your name')) {
+        return ("I'm your friendly voice assistant!");
+        speakResponse("I'm your friendly voice assistant!");
+    } else if (lowerCaseMessage.includes('who made you')) {
+        return ('I was created by Abhishek, your awesome developer!');
+        speakResponse('I was created by Abhishek, your awesome developer!');
+    } else if (lowerCaseMessage.includes('what is the time')) {
+        const currentTime = new Date().toLocaleTimeString();
+        return (`The current time is ${currentTime}.`);
+        speakResponse(`The current time is ${currentTime}.`);
+    } else if (lowerCaseMessage.includes('open google')) {
+        window.open('https://www.google.com', '_blank');
+        return ('Opening Google...');
+    } else if (lowerCaseMessage.includes('search for') && lowerCaseMessage.includes('on google')) {
+        const searchQuery = lowerCaseMessage.split('search for ')[1].split(' on google')[0];
+        window.open(`https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`, '_blank');
+        return (`Searching Google for "${searchQuery}"...`);
+    } else if (lowerCaseMessage.includes('motivate me')) {
+        const motivations = [
+            "Believe you can and you're halfway there.",
+            "The only way to do great work is to love what you do.",
+            "Dream it. Wish it. Do it."
+        ];
+        const motivation = motivations[Math.floor(Math.random() * motivations.length)];
+        return (motivation);
+        speakResponse(motivation);
+    } else {
+        const response = await getGoogleResponse(userMessage);
+        console.log(response);
+        return (response); // Add the response to chat
+        speakResponse(response); // Optional: Convert response to speech
+        return response; // Return the response for display
     }
 }
+
+
 
 
 
@@ -192,9 +249,9 @@ textarea1.addEventListener('keydown', function (e) {
 
 // making account logo to login page redirect
 
-document.getElementById('account').addEventListener('click', function() {
+document.getElementById('account').addEventListener('click', function () {
     window.location.href = 'login/login.html'; // Redirect to login page
-  });
+});
 
 //   clear chat button function
 
