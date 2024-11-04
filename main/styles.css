@@ -514,6 +514,19 @@ body {
 .mic_media_button i:hover {
   color: #a1a0ff;
 }
+.message-content .text {
+  line-height: 1.9; /* Adjust this value for more or less spacing between lines */
+  margin-bottom: 10px; /* Adds space between consecutive messages */
+  padding: 5px 10px;
+}
+
+.message-content {
+  margin-bottom: 15px; /* Adds space between the message bubbles */
+}
+
+.message-content .chat_icon {
+  margin-right: 10px;
+}
 
 
 @keyframes slideIn {
