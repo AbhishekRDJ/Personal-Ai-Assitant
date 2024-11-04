@@ -1,6 +1,7 @@
 const typingform = document.querySelector("#chat-form");
 const chat_list = document.querySelector(".chat-list");
 const textarea1 = document.getElementById('user-input');
+const micbuttondown=document.querySelector(".fa-microphone")
 let userMessage = null;
 
 const textarea = document.getElementById('user-input');
@@ -65,7 +66,7 @@ function handleOutGoingChat() {
     textarea.value = '';
     textarea.style.height = 'auto'; // Reset the height to auto
 
-    // Simulate bot response after a short delay
+    // Check if the message matches any predefined responses before calling the bot API
     setTimeout(() => {
         handleIncomingChat(userMessage);
     }, 1000); // Delay to simulate bot response
@@ -175,32 +176,41 @@ async function handleIncomingChat(userMessage) {
 async function getBotResponse(userMessage) {
     const lowerCaseMessage = userMessage.toLowerCase();
 
-    if (lowerCaseMessage.includes("hello") || lowerCaseMessage.includes("hi")) {
+    if (lowerCaseMessage.includes("hello") || lowerCaseMessage.includes("hi") || lowerCaseMessage.includes("hey")){
         return "Hello! Atom is here to assist you. How can I help today?";
-    } else if (lowerCaseMessage.includes("how are you")) {
+    }else if (lowerCaseMessage.includes("how are you") || lowerCaseMessage.includes("how’s it going") || lowerCaseMessage.includes("how do you do")) {
+
         return "I'm just a bot, but I'm functioning at full capacity! How about you?";
     } else if (lowerCaseMessage.includes("thanks") || lowerCaseMessage.includes("thank you")) {
         return "You're welcome! Feel free to ask me anything.";
-    } else if (lowerCaseMessage.includes("bye") || lowerCaseMessage.includes("goodbye")) {
+    } else if (lowerCaseMessage.includes("bye") || lowerCaseMessage.includes("goodbye") || lowerCaseMessage.includes("see you") || lowerCaseMessage.includes("later")) {
+
         return "Goodbye! Have a great day ahead!";
-    } else if (lowerCaseMessage.includes("help")) {
+    } else if (lowerCaseMessage.includes("help") || lowerCaseMessage.includes("assist") || lowerCaseMessage.includes("support")) {
+
         return "Sure! I'm here to help. What do you need assistance with?";
-    } else if (lowerCaseMessage.includes("what's your name")) {
+    } else if (lowerCaseMessage.includes("what's your name") || lowerCaseMessage.includes("your name") || lowerCaseMessage.includes("who are you")) {
+
         return "I'm Atom, your virtual assistant!";
-    } else if (lowerCaseMessage.includes("who made you")) {
+    } else if (lowerCaseMessage.includes("who made you") || lowerCaseMessage.includes("your creator") || lowerCaseMessage.includes("who built you")) {
+
         return "I was created by a team of skilled developers to assist you!";
-    } else if (lowerCaseMessage.includes("what can you do")) {
+    } else if (lowerCaseMessage.includes("what can you do") || lowerCaseMessage.includes("your abilities") || lowerCaseMessage.includes("what you can do")) {
+
         return "I can chat with you, help with information, and much more! How can I assist today?";
     } else if (lowerCaseMessage.includes("tell me a fact")) {
         return "Did you know? The first computer virus was created in 1986!";
     }
-    else if (lowerCaseMessage.includes('open youtube')) {
+    else if (lowerCaseMessage.includes("open youtube") || lowerCaseMessage.includes("start youtube") || lowerCaseMessage.includes("launch youtube") || lowerCaseMessage.includes("open YouTube")) {
+
         window.open('https://www.youtube.com', '_blank');
         return ('Opening YouTube...');
-    } else if (lowerCaseMessage.includes('play music')) {
+    } else if (lowerCaseMessage.includes("play music") || lowerCaseMessage.includes("start music") || lowerCaseMessage.includes("launch music") || lowerCaseMessage.includes("play some songs")) {
+
         window.open('https://www.spotify.com'); // Example link
         return ('Playing some music...');
-    } else if (lowerCaseMessage.includes('tell me a joke')) {
+    } else if (lowerCaseMessage.includes("tell me a joke") || lowerCaseMessage.includes("say a joke") || lowerCaseMessage.includes("joke")) {
+
         const jokes = [
             "Why don’t skeletons fight each other? They don’t have the guts!",
             "Why don’t eggs tell jokes? They’d crack each other up.",
@@ -212,7 +222,8 @@ async function getBotResponse(userMessage) {
     } else if (lowerCaseMessage.includes('what is the weather today')) {
         return ('Today’s weather is sunny with a high of 25°C.', 'assistant');
         speakResponse('Today’s weather is sunny with a high of 25°C.');
-    } else if (lowerCaseMessage.includes('give me a quote')) {
+    } else if (lowerCaseMessage.includes("give me a quote") || lowerCaseMessage.includes("say a quote") || lowerCaseMessage.includes("inspire me")) {
+
         const quotes = [
             "The best time to plant a tree was 20 years ago. The second best time is now.",
             "Don’t watch the clock; do what it does. Keep going.",
@@ -221,7 +232,8 @@ async function getBotResponse(userMessage) {
         const quote = quotes[Math.floor(Math.random() * quotes.length)]; vs
         return (quote);
         speakResponse(quote);
-    } else if (lowerCaseMessage.includes('can you hear me') || lowerCaseMessage.includes('hello')) {
+    } else if (lowerCaseMessage.includes("can you hear me") || lowerCaseMessage.includes("hello")) {
+
         return ('Yes, I can hear you loud and clear!');
         speakResponse('Yes, I can hear you loud and clear!');
     } else if (lowerCaseMessage.includes('what is your name')) {
@@ -230,18 +242,21 @@ async function getBotResponse(userMessage) {
     } else if (lowerCaseMessage.includes('who made you')) {
         return ('I was created by Abhishek, your awesome developer!');
         speakResponse('I was created by Abhishek, your awesome developer!');
-    } else if (lowerCaseMessage.includes('what is the time')) {
+    } else if (lowerCaseMessage.includes("what is the time") || lowerCaseMessage.includes("current time") || lowerCaseMessage.includes("time now")) {
+
         const currentTime = new Date().toLocaleTimeString();
         return (`The current time is ${currentTime}.`);
         speakResponse(`The current time is ${currentTime}.`);
-    } else if (lowerCaseMessage.includes('open google')) {
+    } else if (lowerCaseMessage.includes("open google") || lowerCaseMessage.includes("start google") || lowerCaseMessage.includes("launch google")) {
+
         window.open('https://www.google.com', '_blank');
         return ('Opening Google...');
     } else if (lowerCaseMessage.includes('search for') && lowerCaseMessage.includes('on google')) {
         const searchQuery = lowerCaseMessage.split('search for ')[1].split(' on google')[0];
         window.open(`https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`, '_blank');
         return (`Searching Google for "${searchQuery}"...`);
-    } else if (lowerCaseMessage.includes('motivate me')) {
+    } else if (lowerCaseMessage.includes("motivate me") || lowerCaseMessage.includes("inspire me") || lowerCaseMessage.includes("give motivation")) {
+
         const motivations = [
             "Believe you can and you're halfway there.",
             "The only way to do great work is to love what you do.",
@@ -293,3 +308,42 @@ clearButton.addEventListener('click', () => {
     chat_list_var.innerHTML = ''; // This will clear all chat messages inside chat_list
 });
 
+
+
+// try to add voice intergration fucntion to get input from voice
+
+let recognition;
+if ('webkitSpeechRecognition' in window) { // Check if the Web Speech API is supported
+    recognition = new webkitSpeechRecognition();
+} else if ('SpeechRecognition' in window) {
+    recognition = new SpeechRecognition();
+} else {
+    alert("Your browser does not support Speech Recognition. Please try Chrome.");
+}
+
+// Configure the Speech Recognition settings
+recognition.lang = 'en-US'; // Set the language
+recognition.interimResults = false; // Don't show interim results
+recognition.maxAlternatives = 1;
+
+
+
+micbuttondown.addEventListener("click", () => {
+    recognition.start();
+    console.log("Voice recognition started. Speak into the microphone.");
+});
+
+
+
+// When the user finishes speaking
+
+recognition.addEventListener("result", (event) => {
+    const userMessage = event.results[0][0].transcript; // Get the recognized text
+    console.log("User said:", userMessage);
+    
+    // Set the recognized text as if it's typed by the user in the input field
+    textarea.value = userMessage;
+    
+    // Proceed with handling the outgoing chat (send it to the chat as a regular message)
+    handleOutGoingChat();
+});
