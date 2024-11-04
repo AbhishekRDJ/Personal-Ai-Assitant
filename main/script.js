@@ -21,13 +21,29 @@ const createMessageElement = (content, className) => {
     return div;
 };
 function addMessage(message, sender) {
-    const chatContainer = document.getElementById('chat-container'); // Assuming you have a chat container element
+    const chatContainer = document.getElementById('chat-list1'); // Ensure you have an element with id 'chat-container'
+
+    if (!chatContainer) {
+        console.error("Chat container not found!");
+        return;
+    }
+
+    // Create the message element
     const messageElement = document.createElement('div');
-
     messageElement.classList.add('message', sender); // 'message' class for styling, 'user' or 'assistant' for sender type
-    messageElement.innerText = message;
 
+    // Replace markdown-like syntax with actual HTML tags
+    message = message.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>'); // Convert bold (**text**) to <b>text</b>
+    message = message.replace(/\*(.*?)\*/g, '<i>$1</i>');     // Convert italics (*text*) to <i>text</i>
+
+    // Use innerHTML to properly render the formatted text
+    messageElement.innerHTML = message;
+
+    // Append the message to the chat container
     chatContainer.appendChild(messageElement);
+
+    // Scroll to the bottom of the chat container to keep the latest message in view
+    chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
 // Function to handle sending user's message
@@ -69,7 +85,7 @@ const getGoogleResponse = async (userMessage) => {
             }
         ]
     };
-    
+
     try {
         const response = await fetch(API_URL, {
             method: 'POST',
@@ -84,11 +100,15 @@ const getGoogleResponse = async (userMessage) => {
         }
 
         const responseData = await response.json();
-        console.log(responseData.candidates[0].content.parts[0].text)
-        return responseData.candidates[0].content.parts[0].text
-        // Here you should adapt how you extract the message from responseData
-        // This is just a placeholder. Replace with actual logic depending on response structure.
-        // return responseData.contents[0].parts[0].text || "No response text available."; 
+        let responseText = responseData.candidates[0].content.parts[0].text;
+        
+        // Replace markdown-like syntax (**text**) for bold and (*text*) for italics with HTML
+        responseText = responseText.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>'); // Bold
+        responseText = responseText.replace(/\*(.*?)\*/g, '<i>$1</i>');     // Italics
+        
+        console.log("Formatted response:", responseText);
+        return responseText;
+
     } catch (error) {
         console.error("Error fetching Google response:", error);
         return "An error occurred while fetching the response.";
@@ -100,6 +120,11 @@ async function handleIncomingChat(userMessage) {
     try {
         const botResponse = await getBotResponse(userMessage); // Wait for the promise to resolve
 
+        // Replace markdown-like syntax with HTML tags for bold and italics
+        let formattedResponse = botResponse
+            .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')  // Convert **text** to <b>text</b>
+            .replace(/\*(.*?)\*/g, '<i>$1</i>');     // Convert *text* to <i>text</i>
+
         const html = `
             <div class="message-content">
                 <i class="fa-solid fa-robot chat_icon"></i>
@@ -107,7 +132,9 @@ async function handleIncomingChat(userMessage) {
             </div>`;
 
         const incomingMessageDiv = createMessageElement(html, "incoming");
-        incomingMessageDiv.querySelector(".text").textContent = botResponse;
+
+        // Use innerHTML to insert formatted text with HTML tags
+        incomingMessageDiv.querySelector(".text").innerHTML = formattedResponse;
         chat_list.appendChild(incomingMessageDiv);
 
         // Scroll to the bottom of the chat after receiving a message
@@ -116,6 +143,7 @@ async function handleIncomingChat(userMessage) {
         console.error("Error in bot response:", error);
     }
 }
+
 // async function getGoogleResponse(prompt) {
 //     try {
 //         const response = await fetch('http://127.0.0.1:5000/get-gemini-response', {
@@ -225,9 +253,10 @@ async function getBotResponse(userMessage) {
     } else {
         const response = await getGoogleResponse(userMessage);
         console.log(response);
-        return (response); // Add the response to chat
-        speakResponse(response); // Optional: Convert response to speech
+        addMessage(response,"assistant")
+        // return (response); // Add the response to chat
         return response; // Return the response for display
+        speakResponse(response); // Optional: Convert response to speech
     }
 }
 
