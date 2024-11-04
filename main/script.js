@@ -1,7 +1,7 @@
 const typingform = document.querySelector("#chat-form");
 const chat_list = document.querySelector(".chat-list");
 const textarea1 = document.getElementById('user-input');
-const micbuttondown=document.querySelector(".fa-microphone")
+const micbuttondown = document.querySelector(".fa-microphone")
 let userMessage = null;
 
 const textarea = document.getElementById('user-input');
@@ -102,11 +102,11 @@ const getGoogleResponse = async (userMessage) => {
 
         const responseData = await response.json();
         let responseText = responseData.candidates[0].content.parts[0].text;
-        
+
         // Replace markdown-like syntax (**text**) for bold and (*text*) for italics with HTML
         responseText = responseText.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>'); // Bold
         responseText = responseText.replace(/\*(.*?)\*/g, '<i>$1</i>');     // Italics
-        
+
         console.log("Formatted response:", responseText);
         return responseText;
 
@@ -176,9 +176,9 @@ async function handleIncomingChat(userMessage) {
 async function getBotResponse(userMessage) {
     const lowerCaseMessage = userMessage.toLowerCase();
 
-    if (lowerCaseMessage.includes("hello") || lowerCaseMessage.includes("hi") || lowerCaseMessage.includes("hey")){
+    if (lowerCaseMessage.includes("hello") || lowerCaseMessage.includes("hi") || lowerCaseMessage.includes("hey")) {
         return "Hello! Atom is here to assist you. How can I help today?";
-    }else if (lowerCaseMessage.includes("how are you") || lowerCaseMessage.includes("how’s it going") || lowerCaseMessage.includes("how do you do")) {
+    } else if (lowerCaseMessage.includes("how are you") || lowerCaseMessage.includes("how’s it going") || lowerCaseMessage.includes("how do you do")) {
 
         return "I'm just a bot, but I'm functioning at full capacity! How about you?";
     } else if (lowerCaseMessage.includes("thanks") || lowerCaseMessage.includes("thank you")) {
@@ -214,8 +214,20 @@ async function getBotResponse(userMessage) {
         const jokes = [
             "Why don’t skeletons fight each other? They don’t have the guts!",
             "Why don’t eggs tell jokes? They’d crack each other up.",
-            "What do you call fake spaghetti? An impasta!"
+            "What do you call fake spaghetti? An impasta!",
+            "Why did the bicycle fall over? Because it was two-tired!",
+            "Why can't you give Elsa a balloon? Because she’ll let it go!",
+            "How do you organize a space party? You planet!",
+            "What do you get when you cross a snowman with a vampire? Frostbite!",
+            "Why are ghosts bad at lying? Because they are too transparent!",
+            "What did the grape do when it got stepped on? Nothing, it just let out a little wine!",
+            "Why was the math book sad? Because it had too many problems.",
+            "How does the ocean say hello? It waves!",
+            "Why did the scarecrow win an award? Because he was outstanding in his field!",
+            "Why do cows have hooves instead of feet? Because they lactose!",
+            "Why did the golfer bring two pairs of pants? In case he got a hole in one!"
         ];
+
         const joke = jokes[Math.floor(Math.random() * jokes.length)];
         return (joke);
         speakResponse(joke);
@@ -227,8 +239,20 @@ async function getBotResponse(userMessage) {
         const quotes = [
             "The best time to plant a tree was 20 years ago. The second best time is now.",
             "Don’t watch the clock; do what it does. Keep going.",
-            "Success is not how high you have climbed, but how you make a positive difference to the world."
+            "Success is not how high you have climbed, but how you make a positive difference to the world.",
+            "It always seems impossible until it’s done.",
+            "Act as if what you do makes a difference. It does.",
+            "Success usually comes to those who are too busy to be looking for it.",
+            "Don’t be pushed around by the fears in your mind. Be led by the dreams in your heart.",
+            "The only limit to our realization of tomorrow is our doubts of today.",
+            "Do what you can, with what you have, where you are.",
+            "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+            "Hardships often prepare ordinary people for an extraordinary destiny.",
+            "The only place where success comes before work is in the dictionary.",
+            "The future belongs to those who believe in the beauty of their dreams.",
+            "Do not wait to strike till the iron is hot; but make it hot by striking."
         ];
+
         const quote = quotes[Math.floor(Math.random() * quotes.length)]; vs
         return (quote);
         speakResponse(quote);
@@ -260,15 +284,27 @@ async function getBotResponse(userMessage) {
         const motivations = [
             "Believe you can and you're halfway there.",
             "The only way to do great work is to love what you do.",
-            "Dream it. Wish it. Do it."
+            "Dream it. Wish it. Do it.",
+            "Your only limit is your mind.",
+            "Don’t stop until you’re proud.",
+            "You don’t have to be great to start, but you have to start to be great.",
+            "Push yourself, because no one else is going to do it for you.",
+            "Great things never come from comfort zones.",
+            "It’s going to be hard, but hard does not mean impossible.",
+            "Success doesn’t come from what you do occasionally. It comes from what you do consistently.",
+            "Don’t wait for opportunity. Create it.",
+            "Small progress is still progress.",
+            "The only bad workout is the one that didn’t happen.",
+            "Don’t stop when you’re tired. Stop when you’re done."
         ];
+
         const motivation = motivations[Math.floor(Math.random() * motivations.length)];
         return (motivation);
         speakResponse(motivation);
     } else {
         const response = await getGoogleResponse(userMessage);
         console.log(response);
-        addMessage(response,"assistant")
+        addMessage(response, "assistant")
         // return (response); // Add the response to chat
         return response; // Return the response for display
         speakResponse(response); // Optional: Convert response to speech
@@ -340,10 +376,10 @@ micbuttondown.addEventListener("click", () => {
 recognition.addEventListener("result", (event) => {
     const userMessage = event.results[0][0].transcript; // Get the recognized text
     console.log("User said:", userMessage);
-    
+
     // Set the recognized text as if it's typed by the user in the input field
     textarea.value = userMessage;
-    
+
     // Proceed with handling the outgoing chat (send it to the chat as a regular message)
     handleOutGoingChat();
 });
