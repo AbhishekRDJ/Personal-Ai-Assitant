@@ -527,7 +527,11 @@ body {
 .message-content .chat_icon {
   margin-right: 10px;
 }
+.mic_media_button i:active{
+  /* background-color: red; */
+  color: #ffffff;
 
+}
 
 @keyframes slideIn {
   from {

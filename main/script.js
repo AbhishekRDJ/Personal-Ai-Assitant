@@ -140,6 +140,7 @@ async function handleIncomingChat(userMessage) {
 
         // Scroll to the bottom of the chat after receiving a message
         chat_list.scrollTop = chat_list.scrollHeight;
+        speakResponse(botResponse);
     } catch (error) {
         console.error("Error in bot response:", error);
     }
@@ -181,7 +182,13 @@ async function getBotResponse(userMessage) {
     } else if (lowerCaseMessage.includes("how are you") || lowerCaseMessage.includes("how’s it going") || lowerCaseMessage.includes("how do you do")) {
 
         return "I'm just a bot, but I'm functioning at full capacity! How about you?";
-    } else if (lowerCaseMessage.includes("thanks") || lowerCaseMessage.includes("thank you")) {
+    }
+    else if (lowerCaseMessage.includes("What is my name") || lowerCaseMessage.includes("do you know me") || lowerCaseMessage.includes("my name")) {
+
+        return "I think you're my creator, Abhishek. They usually talk to me.";
+    }
+
+    else if (lowerCaseMessage.includes("thanks") || lowerCaseMessage.includes("thank you")) {
         return "You're welcome! Feel free to ask me anything.";
     } else if (lowerCaseMessage.includes("bye") || lowerCaseMessage.includes("goodbye") || lowerCaseMessage.includes("see you") || lowerCaseMessage.includes("later")) {
 
@@ -260,6 +267,7 @@ async function getBotResponse(userMessage) {
 
         return ('Yes, I can hear you loud and clear!');
         speakResponse('Yes, I can hear you loud and clear!');
+
     } else if (lowerCaseMessage.includes('what is your name')) {
         return ("I'm your friendly voice assistant!");
         speakResponse("I'm your friendly voice assistant!");
@@ -382,4 +390,32 @@ recognition.addEventListener("result", (event) => {
 
     // Proceed with handling the outgoing chat (send it to the chat as a regular message)
     handleOutGoingChat();
+});
+
+
+// add the voice or speak aloud button fucntion 
+
+let synth = window.speechSynthesis;
+let utterance;  // Variable to store the current speech utterance
+
+// Function to speak the assistant's response aloud
+function speakResponse(responseText) {
+    if (synth.speaking) {
+        synth.cancel(); // Stop any previous speech if already speaking
+    }
+
+    utterance = new SpeechSynthesisUtterance(responseText);
+    utterance.lang = 'en-US'; // Language for speech
+    utterance.pitch = 1;      // Pitch of the voice
+    utterance.rate = 1;       // Speed of the speech
+
+    synth.speak(utterance);
+}
+
+
+// by clicking this btn speak will stop
+
+
+document.querySelector(".fa-volume-xmark").addEventListener("click", () => {
+    synth.cancel(); // Stop any ongoing speech
 });
