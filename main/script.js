@@ -309,7 +309,16 @@ async function getBotResponse(userMessage) {
         const motivation = motivations[Math.floor(Math.random() * motivations.length)];
         return (motivation);
         speakResponse(motivation);
-    } else {
+
+    } 
+    else if (lowerCaseMessage.includes("remaining tasks") || lowerCaseMessage.includes("my tasks") || lowerCaseMessage.includes("todo list")|| lowerCaseMessage.includes("my task")) {
+        // Redirect to the todo.html page
+        // window.location.href = "/todo/todo.html";
+        console.log(document.querySelector("ul li:nth-of-type(2) a"))
+        document.querySelector("ul li:nth-of-type(2) a").click()
+    }
+    
+    else {
         const response = await getGoogleResponse(userMessage);
         console.log(response);
         addMessage(response, "assistant")
