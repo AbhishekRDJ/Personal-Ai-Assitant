@@ -5,7 +5,7 @@ const csv = require('csv-parser');
 const path = require('path');
 
 const app = express();
-const port = 3000;
+const port = 5500;
 
 // Absolute paths to Python script and CSV file
 const pythonScript = 'C:/Users/abhis/OneDrive/Desktop/opencv-object-detection/src/object-detection.py';
