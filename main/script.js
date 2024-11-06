@@ -428,3 +428,20 @@ function speakResponse(responseText) {
 document.querySelector(".fa-volume-xmark").addEventListener("click", () => {
     synth.cancel(); // Stop any ongoing speech
 });
+//  Add an event listener to the button to start detection when clicked
+document.querySelector('.fa-object-ungroup').addEventListener('click', function() {
+    // Sending a GET request to /start-object-detection
+    fetch('/start-object-detection')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to start object detection');
+            }
+            return response.text(); // or response.json() if you send JSON from the server
+        })
+        .then(data => {
+            console.log('Object detection started:', data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});
