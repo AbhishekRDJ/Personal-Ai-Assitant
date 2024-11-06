@@ -177,7 +177,7 @@ async function handleIncomingChat(userMessage) {
 async function getBotResponse(userMessage) {
     const lowerCaseMessage = userMessage.toLowerCase();
 
-    if (lowerCaseMessage.includes("hello") || lowerCaseMessage.includes("hi") || lowerCaseMessage.includes("hey")) {
+    if (  lowerCaseMessage.includes("hi") || lowerCaseMessage.includes("hey")) {
         return "Hello! Atom is here to assist you. How can I help today?";
     } else if (lowerCaseMessage.includes("how are you") || lowerCaseMessage.includes("how’s it going") || lowerCaseMessage.includes("how do you do")) {
 
