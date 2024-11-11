@@ -116,217 +116,244 @@ const getGoogleResponse = async (userMessage) => {
     }
 };
 
-// Function to handle bot's response
-async function handleIncomingChat(userMessage) {
-    try {
-        const botResponse = await getBotResponse(userMessage); // Wait for the promise to resolve
+    // Function to handle bot's response
+    async function handleIncomingChat(userMessage) {
+        try {
+            const botResponse = await getBotResponse(userMessage); // Wait for the promise to resolve
 
-        // Replace markdown-like syntax with HTML tags for bold and italics
-        let formattedResponse = botResponse
-            .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')  // Convert **text** to <b>text</b>
-            .replace(/\*(.*?)\*/g, '<i>$1</i>');     // Convert *text* to <i>text</i>
+            // Replace markdown-like syntax with HTML tags for bold and italics
+            let formattedResponse = botResponse
+                .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')  // Convert **text** to <b>text</b>
+                .replace(/\*(.*?)\*/g, '<i>$1</i>');     // Convert *text* to <i>text</i>
 
-        const html = `
-            <div class="message-content">
-                <i class="fa-solid fa-robot chat_icon"></i>
-                <p class="text"></p>
-            </div>`;
+            const html = `
+                <div class="message-content">
+                    <i class="fa-solid fa-robot chat_icon"></i>
+                    <p class="text"></p>
+                </div>`;
 
-        const incomingMessageDiv = createMessageElement(html, "incoming");
+            const incomingMessageDiv = createMessageElement(html, "incoming");
 
-        // Use innerHTML to insert formatted text with HTML tags
-        incomingMessageDiv.querySelector(".text").innerHTML = formattedResponse;
-        chat_list.appendChild(incomingMessageDiv);
+            // Use innerHTML to insert formatted text with HTML tags
+            incomingMessageDiv.querySelector(".text").innerHTML = formattedResponse;
+            chat_list.appendChild(incomingMessageDiv);
 
-        // Scroll to the bottom of the chat after receiving a message
-        chat_list.scrollTop = chat_list.scrollHeight;
-        speakResponse(botResponse);
-    } catch (error) {
-        console.error("Error in bot response:", error);
-    }
-}
-
-// async function getGoogleResponse(prompt) {
-//     try {
-//         const response = await fetch('http://127.0.0.1:5000/get-gemini-response', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({ prompt: prompt })
-//         });
-
-//         // Check if the response is okay (status in the range 200-299)
-//         if (!response.ok) {
-//             const errorText = await response.text(); // Get error details from the response
-//             throw new Error(`Network response was not ok: ${response.status} - ${errorText}`);
-//         }
-
-//         // Parse the JSON data from the response
-//         const data = await response.json();
-//         return data;
-//     } catch (error) {
-//         console.error('Error fetching Google response:', error); // Log the error for debugging
-//         throw error; // Rethrow the error for further handling
-//     }
-// }
-
-
-
-// Simulated bot response
-async function getBotResponse(userMessage) {
-    const lowerCaseMessage = userMessage.toLowerCase();
-
-    if (  lowerCaseMessage.includes("hi") || lowerCaseMessage.includes("hey")) {
-        return "Hello! Atom is here to assist you. How can I help today?";
-    } else if (lowerCaseMessage.includes("how are you") || lowerCaseMessage.includes("how’s it going") || lowerCaseMessage.includes("how do you do")) {
-
-        return "I'm just a bot, but I'm functioning at full capacity! How about you?";
-    }
-    else if (lowerCaseMessage.includes("What is my name") || lowerCaseMessage.includes("do you know me") || lowerCaseMessage.includes("my name")) {
-
-        return "I think you're my creator, Abhishek. They usually talk to me.";
+            // Scroll to the bottom of the chat after receiving a message
+            chat_list.scrollTop = chat_list.scrollHeight;
+            speakResponse(botResponse);
+        } catch (error) {
+            console.error("Error in bot response:", error);
+        }
     }
 
-    else if (lowerCaseMessage.includes("thanks") || lowerCaseMessage.includes("thank you")) {
-        return "You're welcome! Feel free to ask me anything.";
-    } else if (lowerCaseMessage.includes("bye") || lowerCaseMessage.includes("goodbye") || lowerCaseMessage.includes("see you") || lowerCaseMessage.includes("later")) {
+    // async function getGoogleResponse(prompt) {
+    //     try {
+    //         const response = await fetch('http://127.0.0.1:5000/get-gemini-response', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ prompt: prompt })
+    //         });
 
-        return "Goodbye! Have a great day ahead!";
-    } else if (lowerCaseMessage.includes("help") || lowerCaseMessage.includes("assist") || lowerCaseMessage.includes("support")) {
+    //         // Check if the response is okay (status in the range 200-299)
+    //         if (!response.ok) {
+    //             const errorText = await response.text(); // Get error details from the response
+    //             throw new Error(`Network response was not ok: ${response.status} - ${errorText}`);
+    //         }
 
-        return "Sure! I'm here to help. What do you need assistance with?";
-    } else if (lowerCaseMessage.includes("what's your name") || lowerCaseMessage.includes("your name") || lowerCaseMessage.includes("who are you")) {
+    //         // Parse the JSON data from the response
+    //         const data = await response.json();
+    //         return data;
+    //     } catch (error) {
+    //         console.error('Error fetching Google response:', error); // Log the error for debugging
+    //         throw error; // Rethrow the error for further handling
+    //     }
+    // }
 
-        return "I'm Atom, your virtual assistant!";
-    } else if (lowerCaseMessage.includes("who made you") || lowerCaseMessage.includes("your creator") || lowerCaseMessage.includes("who built you")) {
 
-        return "I was created by a team of skilled developers to assist you!";
-    } else if (lowerCaseMessage.includes("what can you do") || lowerCaseMessage.includes("your abilities") || lowerCaseMessage.includes("what you can do")) {
 
-        return "I can chat with you, help with information, and much more! How can I assist today?";
-    } else if (lowerCaseMessage.includes("tell me a fact")) {
-        return "Did you know? The first computer virus was created in 1986!";
+    // Simulated bot response
+    async function getBotResponse(userMessage) {
+        const lowerCaseMessage = userMessage.toLowerCase();
+
+        if (  lowerCaseMessage.includes("hi") || lowerCaseMessage.includes("hey")) {
+            return "Hello! Atom is here to assist you. How can I help today?";
+        } else if (lowerCaseMessage.includes("how are you") || lowerCaseMessage.includes("how’s it going") || lowerCaseMessage.includes("how do you do")) {
+
+            return "I'm just a bot, but I'm functioning at full capacity! How about you?";
+        }
+        else if (lowerCaseMessage.includes("What is my name") || lowerCaseMessage.includes("do you know me") || lowerCaseMessage.includes("my name")) {
+
+            return "I think you're my creator, Abhishek. They usually talk to me.";
+        }
+
+        else if (lowerCaseMessage.includes("thanks") || lowerCaseMessage.includes("thank you")) {
+            return "You're welcome! Feel free to ask me anything.";
+        } else if (lowerCaseMessage.includes("bye") || lowerCaseMessage.includes("goodbye") || lowerCaseMessage.includes("see you") || lowerCaseMessage.includes("later")) {
+
+            return "Goodbye! Have a great day ahead!";
+        } else if (lowerCaseMessage.includes("help") || lowerCaseMessage.includes("assist") || lowerCaseMessage.includes("support")) {
+
+            return "Sure! I'm here to help. What do you need assistance with?";
+        } else if (lowerCaseMessage.includes("what's your name") || lowerCaseMessage.includes("your name") || lowerCaseMessage.includes("who are you")) {
+
+            return "I'm Atom, your virtual assistant!";
+        } else if (lowerCaseMessage.includes("who made you") || lowerCaseMessage.includes("your creator") || lowerCaseMessage.includes("who built you")) {
+
+            return "I was created by a Abhishek to make world better place!";
+        } else if (lowerCaseMessage.includes("what can you do") || lowerCaseMessage.includes("your abilities") || lowerCaseMessage.includes("what you can do")) {
+
+            return "I can chat with you, help with information, and much more! How can I assist today?";
+        } else if (lowerCaseMessage.includes("tell me a fact")) {
+            // Array of facts
+            const facts = [
+                "Did you know? The first computer virus was created in 1986!",
+                "Did you know? Honey never spoils. Archaeologists have found pots of honey in ancient tombs that are over 3,000 years old!",
+                "Did you know? A day on Venus is longer than a year on Venus. It takes 243 Earth days to complete a rotation but only 225 Earth days to orbit the sun!",
+                "Did you know? The Eiffel Tower can grow by up to 6 inches during the summer due to thermal expansion of the metal!",
+                "Did you know? Octopuses have three hearts: two pump blood to the gills, and one pumps it to the rest of the body!",
+                "Did you know? Bananas are berries, but strawberries are not!",
+                "Did you know? The human nose can detect over 1 trillion different scents!",
+                "Did you know? A single cloud can weigh more than 1 million pounds!",
+                "Did you know? The longest hiccuping spree lasted 68 years!",
+                "Did you know? Sloths only poop once a week!",
+                "Did you know? The shortest war in history lasted 38 to 45 minutes between Britain and Zanzibar in 1896!",
+                "Did you know? Elephants are the only animals that can't jump!",
+                "Did you know? The speed of a computer mouse is measured in 'Mickeys'?",
+                "Did you know? A human’s small intestine is about 22 feet long!",
+                "Did you know? Sharks have been around longer than trees, existing for more than 400 million years!",
+                "Did you know? The shortest commercial flight in the world is only 57 seconds long, between two islands in Scotland!",
+                "Did you know? The longest time between two twins being born is 87 days!",
+                "Did you know? The first email ever sent was by Ray Tomlinson to himself in 1971, and it said 'QWERTYUIOP'!",
+                "Did you know? A blue whale’s tongue alone can weigh as much as an elephant!",
+                "Did you know? The human body has more bacterial cells than human cells!"
+            ];
+        
+            // Randomly select a fact
+            const randomFact = facts[Math.floor(Math.random() * facts.length)];
+            return randomFact;
+        }
+        
+        else if (lowerCaseMessage.includes("open youtube") || lowerCaseMessage.includes("start youtube") || lowerCaseMessage.includes("launch youtube") || lowerCaseMessage.includes("open YouTube")) {
+
+            window.open('https://www.youtube.com', '_blank');
+            return ('Opening YouTube...');
+        } else if (lowerCaseMessage.includes("play music") || lowerCaseMessage.includes("start music") || lowerCaseMessage.includes("launch music") || lowerCaseMessage.includes("play some songs")) {
+
+            window.open('https://www.spotify.com'); // Example link
+            return ('Playing some music...');
+        } else if (lowerCaseMessage.includes("tell me a joke") || lowerCaseMessage.includes("say a joke") || lowerCaseMessage.includes("joke")) {
+
+            const jokes = [
+                "Why don’t skeletons fight each other? They don’t have the guts!",
+                "Why don’t eggs tell jokes? They’d crack each other up.",
+                "What do you call fake spaghetti? An impasta!",
+                "Why did the bicycle fall over? Because it was two-tired!",
+                "Why can't you give Elsa a balloon? Because she’ll let it go!",
+                "How do you organize a space party? You planet!",
+                "What do you get when you cross a snowman with a vampire? Frostbite!",
+                "Why are ghosts bad at lying? Because they are too transparent!",
+                "What did the grape do when it got stepped on? Nothing, it just let out a little wine!",
+                "Why was the math book sad? Because it had too many problems.",
+                "How does the ocean say hello? It waves!",
+                "Why did the scarecrow win an award? Because he was outstanding in his field!",
+                "Why do cows have hooves instead of feet? Because they lactose!",
+                "Why did the golfer bring two pairs of pants? In case he got a hole in one!"
+            ];
+
+            const joke = jokes[Math.floor(Math.random() * jokes.length)];
+            return (joke);
+            speakResponse(joke);
+        } else if (lowerCaseMessage.includes('what is the weather today')) {
+            return ('Today’s weather is sunny with a high of 25°C.');
+            speakResponse('Today’s weather is sunny with a high of 25°C.');
+        } else if (lowerCaseMessage.includes("give me a quote") || lowerCaseMessage.includes("say a quote") || lowerCaseMessage.includes("inspire me")) {
+
+            const quotes = [
+                "The best time to plant a tree was 20 years ago. The second best time is now.",
+                "Don’t watch the clock; do what it does. Keep going.",
+                "Success is not how high you have climbed, but how you make a positive difference to the world.",
+                "It always seems impossible until it’s done.",
+                "Act as if what you do makes a difference. It does.",
+                "Success usually comes to those who are too busy to be looking for it.",
+                "Don’t be pushed around by the fears in your mind. Be led by the dreams in your heart.",
+                "The only limit to our realization of tomorrow is our doubts of today.",
+                "Do what you can, with what you have, where you are.",
+                "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+                "Hardships often prepare ordinary people for an extraordinary destiny.",
+                "The only place where success comes before work is in the dictionary.",
+                "The future belongs to those who believe in the beauty of their dreams.",
+                "Do not wait to strike till the iron is hot; but make it hot by striking."
+            ];
+
+            const quote = quotes[Math.floor(Math.random() * quotes.length)]; vs
+            return (quote);
+            speakResponse(quote);
+        } else if (lowerCaseMessage.includes("can you hear me") || lowerCaseMessage.includes("hello can you here me")) {
+
+            return ('Yes, I can hear you loud and clear!');
+            speakResponse('Yes, I can hear you loud and clear!');
+
+        } else if (lowerCaseMessage.includes('what is your name')) {
+            return ("I'm your friendly voice assistant!");
+            speakResponse("I'm your friendly voice assistant!");
+        } else if (lowerCaseMessage.includes('who made you')) {
+            return ('I was created by Abhishek, your awesome developer!');
+            speakResponse('I was created by Abhishek, your awesome developer!');
+        } else if (lowerCaseMessage.includes("what is the time") || lowerCaseMessage.includes("current time") || lowerCaseMessage.includes("time now")) {
+
+            const currentTime = new Date().toLocaleTimeString();
+            return (`The current time is ${currentTime}.`);
+            speakResponse(`The current time is ${currentTime}.`);
+        } else if (lowerCaseMessage.includes("open google") || lowerCaseMessage.includes("start google") || lowerCaseMessage.includes("launch google")) {
+
+            window.open('https://www.google.com', '_blank');
+            return ('Opening Google...');
+        } else if (lowerCaseMessage.includes('search for') && lowerCaseMessage.includes('on google')) {
+            const searchQuery = lowerCaseMessage.split('search for ')[1].split(' on google')[0];
+            window.open(`https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`, '_blank');
+            return (`Searching Google for "${searchQuery}"...`);
+        } else if (lowerCaseMessage.includes("motivate me") || lowerCaseMessage.includes("inspire me") || lowerCaseMessage.includes("give motivation")) {
+
+            const motivations = [
+                "Believe you can and you're halfway there.",
+                "The only way to do great work is to love what you do.",
+                "Dream it. Wish it. Do it.",
+                "Your only limit is your mind.",
+                "Don’t stop until you’re proud.",
+                "You don’t have to be great to start, but you have to start to be great.",
+                "Push yourself, because no one else is going to do it for you.",
+                "Great things never come from comfort zones.",
+                "It’s going to be hard, but hard does not mean impossible.",
+                "Success doesn’t come from what you do occasionally. It comes from what you do consistently.",
+                "Don’t wait for opportunity. Create it.",
+                "Small progress is still progress.",
+                "The only bad workout is the one that didn’t happen.",
+                "Don’t stop when you’re tired. Stop when you’re done."
+            ];
+
+            const motivation = motivations[Math.floor(Math.random() * motivations.length)];
+            return (motivation);
+            speakResponse(motivation);
+
+        } 
+        else if (lowerCaseMessage.includes("remaining tasks") || lowerCaseMessage.includes("my tasks") || lowerCaseMessage.includes("todo")|| lowerCaseMessage.includes("my task")) {
+            // Redirect to the todo.html page
+            // window.location.href = "/todo/todo.html";
+            console.log(document.querySelector("ul li:nth-of-type(2) a"))
+            document.querySelector("ul li:nth-of-type(2) a").click()
+        }
+        
+        else {
+            const response = await getGoogleResponse(userMessage);
+            console.log(response);
+            addMessage(response, "assistant")
+            // return (response); // Add the response to chat
+            return response; // Return the response for display
+            speakResponse(response); // Optional: Convert response to speech
+        }
     }
-    else if (lowerCaseMessage.includes("open youtube") || lowerCaseMessage.includes("start youtube") || lowerCaseMessage.includes("launch youtube") || lowerCaseMessage.includes("open YouTube")) {
-
-        window.open('https://www.youtube.com', '_blank');
-        return ('Opening YouTube...');
-    } else if (lowerCaseMessage.includes("play music") || lowerCaseMessage.includes("start music") || lowerCaseMessage.includes("launch music") || lowerCaseMessage.includes("play some songs")) {
-
-        window.open('https://www.spotify.com'); // Example link
-        return ('Playing some music...');
-    } else if (lowerCaseMessage.includes("tell me a joke") || lowerCaseMessage.includes("say a joke") || lowerCaseMessage.includes("joke")) {
-
-        const jokes = [
-            "Why don’t skeletons fight each other? They don’t have the guts!",
-            "Why don’t eggs tell jokes? They’d crack each other up.",
-            "What do you call fake spaghetti? An impasta!",
-            "Why did the bicycle fall over? Because it was two-tired!",
-            "Why can't you give Elsa a balloon? Because she’ll let it go!",
-            "How do you organize a space party? You planet!",
-            "What do you get when you cross a snowman with a vampire? Frostbite!",
-            "Why are ghosts bad at lying? Because they are too transparent!",
-            "What did the grape do when it got stepped on? Nothing, it just let out a little wine!",
-            "Why was the math book sad? Because it had too many problems.",
-            "How does the ocean say hello? It waves!",
-            "Why did the scarecrow win an award? Because he was outstanding in his field!",
-            "Why do cows have hooves instead of feet? Because they lactose!",
-            "Why did the golfer bring two pairs of pants? In case he got a hole in one!"
-        ];
-
-        const joke = jokes[Math.floor(Math.random() * jokes.length)];
-        return (joke);
-        speakResponse(joke);
-    } else if (lowerCaseMessage.includes('what is the weather today')) {
-        return ('Today’s weather is sunny with a high of 25°C.', 'assistant');
-        speakResponse('Today’s weather is sunny with a high of 25°C.');
-    } else if (lowerCaseMessage.includes("give me a quote") || lowerCaseMessage.includes("say a quote") || lowerCaseMessage.includes("inspire me")) {
-
-        const quotes = [
-            "The best time to plant a tree was 20 years ago. The second best time is now.",
-            "Don’t watch the clock; do what it does. Keep going.",
-            "Success is not how high you have climbed, but how you make a positive difference to the world.",
-            "It always seems impossible until it’s done.",
-            "Act as if what you do makes a difference. It does.",
-            "Success usually comes to those who are too busy to be looking for it.",
-            "Don’t be pushed around by the fears in your mind. Be led by the dreams in your heart.",
-            "The only limit to our realization of tomorrow is our doubts of today.",
-            "Do what you can, with what you have, where you are.",
-            "Success is not final, failure is not fatal: It is the courage to continue that counts.",
-            "Hardships often prepare ordinary people for an extraordinary destiny.",
-            "The only place where success comes before work is in the dictionary.",
-            "The future belongs to those who believe in the beauty of their dreams.",
-            "Do not wait to strike till the iron is hot; but make it hot by striking."
-        ];
-
-        const quote = quotes[Math.floor(Math.random() * quotes.length)]; vs
-        return (quote);
-        speakResponse(quote);
-    } else if (lowerCaseMessage.includes("can you hear me") || lowerCaseMessage.includes("hello")) {
-
-        return ('Yes, I can hear you loud and clear!');
-        speakResponse('Yes, I can hear you loud and clear!');
-
-    } else if (lowerCaseMessage.includes('what is your name')) {
-        return ("I'm your friendly voice assistant!");
-        speakResponse("I'm your friendly voice assistant!");
-    } else if (lowerCaseMessage.includes('who made you')) {
-        return ('I was created by Abhishek, your awesome developer!');
-        speakResponse('I was created by Abhishek, your awesome developer!');
-    } else if (lowerCaseMessage.includes("what is the time") || lowerCaseMessage.includes("current time") || lowerCaseMessage.includes("time now")) {
-
-        const currentTime = new Date().toLocaleTimeString();
-        return (`The current time is ${currentTime}.`);
-        speakResponse(`The current time is ${currentTime}.`);
-    } else if (lowerCaseMessage.includes("open google") || lowerCaseMessage.includes("start google") || lowerCaseMessage.includes("launch google")) {
-
-        window.open('https://www.google.com', '_blank');
-        return ('Opening Google...');
-    } else if (lowerCaseMessage.includes('search for') && lowerCaseMessage.includes('on google')) {
-        const searchQuery = lowerCaseMessage.split('search for ')[1].split(' on google')[0];
-        window.open(`https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`, '_blank');
-        return (`Searching Google for "${searchQuery}"...`);
-    } else if (lowerCaseMessage.includes("motivate me") || lowerCaseMessage.includes("inspire me") || lowerCaseMessage.includes("give motivation")) {
-
-        const motivations = [
-            "Believe you can and you're halfway there.",
-            "The only way to do great work is to love what you do.",
-            "Dream it. Wish it. Do it.",
-            "Your only limit is your mind.",
-            "Don’t stop until you’re proud.",
-            "You don’t have to be great to start, but you have to start to be great.",
-            "Push yourself, because no one else is going to do it for you.",
-            "Great things never come from comfort zones.",
-            "It’s going to be hard, but hard does not mean impossible.",
-            "Success doesn’t come from what you do occasionally. It comes from what you do consistently.",
-            "Don’t wait for opportunity. Create it.",
-            "Small progress is still progress.",
-            "The only bad workout is the one that didn’t happen.",
-            "Don’t stop when you’re tired. Stop when you’re done."
-        ];
-
-        const motivation = motivations[Math.floor(Math.random() * motivations.length)];
-        return (motivation);
-        speakResponse(motivation);
-
-    } 
-    else if (lowerCaseMessage.includes("remaining tasks") || lowerCaseMessage.includes("my tasks") || lowerCaseMessage.includes("todo")|| lowerCaseMessage.includes("my task")) {
-        // Redirect to the todo.html page
-        // window.location.href = "/todo/todo.html";
-        console.log(document.querySelector("ul li:nth-of-type(2) a"))
-        document.querySelector("ul li:nth-of-type(2) a").click()
-    }
-    
-    else {
-        const response = await getGoogleResponse(userMessage);
-        console.log(response);
-        addMessage(response, "assistant")
-        // return (response); // Add the response to chat
-        return response; // Return the response for display
-        speakResponse(response); // Optional: Convert response to speech
-    }
-}
 
 
 
@@ -353,7 +380,7 @@ document.getElementById('account').addEventListener('click', function () {
 //   clear chat button function
 
 // Getting the elements
-const chat_list_var = document.getElementById('chat_list');
+const chat_list_var = document.querySelectorAll('.chat_list');
 const clearButton = document.getElementById('clear_btn');
 
 // Adding an event listener to the clear button
