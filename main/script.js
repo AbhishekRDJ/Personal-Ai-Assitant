@@ -83,7 +83,7 @@ const getRandomAPIKey = () => API_KEYS[Math.floor(Math.random() * API_KEYS.lengt
 const getGoogleResponse = async (userMessage) => {
     // Randomly select an API key
     const API_key = getRandomAPIKey();
-    console.log(API_key)
+    // console.log(API_key)
     const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_key}`;
 
     const data = {
