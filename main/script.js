@@ -71,10 +71,21 @@ function handleOutGoingChat() {
         handleIncomingChat(userMessage);
     }, 1000); // Delay to simulate bot response
 }
-const API_key = "AIzaSyDbVgzGDQ9SbhrQh3ilUMTjNJq2KWJLv58";
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_key}`;
+
+// this two are the main keys of my project
+const API_KEYS = [
+    "AIzaSyCJgpvTsiLRy0eSOK7AcZ-PXhT7hrwMnjI",
+    "AIzaSyAt_v9DeTvUUAxBvHr_xkI56nBzssMs6jk"
+];
+
+const getRandomAPIKey = () => API_KEYS[Math.floor(Math.random() * API_KEYS.length)];
 
 const getGoogleResponse = async (userMessage) => {
+    // Randomly select an API key
+    const API_key = getRandomAPIKey();
+    console.log(API_key)
+    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_key}`;
+
     const data = {
         contents: [
             {
@@ -101,6 +112,7 @@ const getGoogleResponse = async (userMessage) => {
         }
 
         const responseData = await response.json();
+        console.log(responseData);
         let responseText = responseData.candidates[0].content.parts[0].text;
 
         // Replace markdown-like syntax (**text**) for bold and (*text*) for italics with HTML
@@ -114,9 +126,8 @@ const getGoogleResponse = async (userMessage) => {
         console.error("Error fetching Google response:", error);
         return "An error occurred while fetching the response.";
     }
-};
-
-    // Function to handle bot's response
+};    
+// Function to handle bot's response
     async function handleIncomingChat(userMessage) {
         try {
             const botResponse = await getBotResponse(userMessage); // Wait for the promise to resolve
