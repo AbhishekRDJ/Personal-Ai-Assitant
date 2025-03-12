@@ -80,12 +80,21 @@ let API_KEYS;
 fetch('https://personal-ai-assitant.onrender.com/api/get-api-key')
     .then(response => response.json())
     .then(data => {
-        API_KEYS = data.apiKey;
-        // Now you can use API_KEY in frontend
+        if (!data.apiKey) {
+            throw new Error("API key is missing from the response");
+        }
+        API_KEYS = [data.apiKey]; // Store in an array
     })
     .catch(error => console.error('Error fetching API key:', error));
 
-const getRandomAPIKey = () => String(API_KEYS);
+const getRandomAPIKey = () => {
+    if (!API_KEYS || API_KEYS.length === 0) {
+        console.error("No API keys available!");
+        return null; // Handle missing API key gracefully
+    }
+    return API_KEYS[0]; // Returns the first API key
+};
+
 
 const getGoogleResponse = async (userMessage) => {
     // Randomly select an API key
