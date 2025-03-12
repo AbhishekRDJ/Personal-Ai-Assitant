@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const { spawn } = require('child_process');
 const fs = require('fs');
@@ -82,6 +83,9 @@ function mainLoop() {
         }
     }, 5000); // Poll every 1 second
 }
+app.get('/api/get-api-key', (req, res) => {
+    res.json({ apiKey: process.env.API_KEY });
+});
 
 // Start the server
 app.listen(port, () => {
