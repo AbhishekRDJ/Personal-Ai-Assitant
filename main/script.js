@@ -83,7 +83,7 @@ fetch('https://personal-ai-assitant.onrender.com/api/get-api-key')
         if (!data.apiKey) {
             throw new Error("API key is missing from the response");
         }
-        API_KEYS = [data.apiKey]; // Store in an array
+        API_KEYS = data.apiKey; // Store in an array
     })
     .catch(error => console.error('Error fetching API key:', error));
 
@@ -92,7 +92,7 @@ const getRandomAPIKey = () => {
         console.error("No API keys available!");
         return null; // Handle missing API key gracefully
     }
-    return API_KEYS[0]; // Returns the first API key
+    return API_KEYS; // Returns the first API key
 };
 
 
