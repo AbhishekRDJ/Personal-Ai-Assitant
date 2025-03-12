@@ -77,7 +77,7 @@ function handleOutGoingChat() {
 // this two are the main keys of my project
 let API_KEYS;
 
-fetch('http://localhost:5500/api/get-api-key')
+fetch('https://personal-ai-assitant.onrender.com/api/get-api-key')
     .then(response => response.json())
     .then(data => {
         API_KEYS = data.apiKey;
