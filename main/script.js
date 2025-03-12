@@ -81,7 +81,6 @@ fetch('http://localhost:5500/api/get-api-key')
     .then(response => response.json())
     .then(data => {
         API_KEYS = data.apiKey;
-        console.log("API Key received:", API_KEYS);
         // Now you can use API_KEY in frontend
     })
     .catch(error => console.error('Error fetching API key:', error));
