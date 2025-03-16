@@ -4,6 +4,12 @@ A personal AI assistant like Jarvis built with pure JavaScript, HTML, CSS, and T
 
 ![Personal AI Assistant](https://github.com/AbhishekRDJ/Personal-Ai-Assitant/blob/main/assets/image.png)
 
+## 🌐 Live Demo
+
+Experience the Personal AI Assistant in action:
+[https://personal-ai-assitant.onrender.com](https://personal-ai-assitant.onrender.com)
+
+
 ## 📋 Overview
 
 This project creates an AI assistant similar to Jarvis that can interact with users through a clean, modern interface. Built with web technologies and connected to powerful AI models, it provides a personal assistant experience right in your browser.
@@ -17,10 +23,6 @@ This project creates an AI assistant similar to Jarvis that can interact with us
 - **Responsive Design**: Works across desktop and mobile devices
 - **Efficient API Handling**: Optimized data retrieval and interaction
 
-## 🌐 Live Demo
-
-Experience the Personal AI Assistant in action:
-[https://personal-ai-assitant.onrender.com](https://personal-ai-assitant.onrender.com)
 
 ## 🛠️ Technologies Used
 
