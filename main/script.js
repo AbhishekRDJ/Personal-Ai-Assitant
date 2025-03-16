@@ -499,3 +499,31 @@ document.querySelector('.fa-object-ungroup').addEventListener('click', function 
             console.error('Error:', error);
         });
 });
+
+
+// code for responsiveness
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const menuIcon = document.querySelector(".fa-bars-staggered");
+    const sidebar = document.querySelector(".sidebar");
+    const menuIcon2 = document.querySelector('.fa-abhi2')
+
+    menuIcon.addEventListener("click", function () {
+        sidebar.style.display = 'none'
+        document.querySelector('.main-content').style.marginLeft = '0'
+        document.querySelector('.chat-input').style.marginLeft = '0'
+        document.querySelector('.chat-input').style.left = '180px'
+        document.querySelector('.fa-abhi2').style.display = 'flex'
+
+    });
+    menuIcon2.addEventListener("click", function () {
+        sidebar.style.display = 'flex'
+        document.querySelector('.main-content').style.marginLeft = '250px'
+        document.querySelector('.chat-input').style.marginLeft = '0px'
+        document.querySelector('.chat-input').style.left = '250px'
+        menuIcon2.style.display = 'none'
+
+    });
+});
+

@@ -5,6 +5,7 @@
   /* overflow: hidden; */
   box-sizing: border-box;
 }
+
 body {
   font-family: 'Poppins', sans-serif;
   background-color: #1a1a1a;
@@ -24,7 +25,7 @@ body {
 .sidebar {
 
   /* width: 30vw; */
- 
+
   position: fixed;
   /* Make the sidebar fixed to the left */
   left: 0;
@@ -37,7 +38,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   animation: slideIn 0.5s ease-out;
-  
+
   /* display: none; */
 }
 
@@ -101,18 +102,25 @@ body {
   transform: scale(1.05);
   border-radius: 5px;
 }
+
 /* Target the anchor inside the list item */
 .nev ul li a {
-  display: block;  /* Make the anchor behave like a block element to fill the entire li */
-  color: inherit;  /* Inherit the color from the li */
-  text-decoration: none;  /* Remove the default underline */
-  padding: 10px;  /* Ensure the anchor has the same padding as the li */
+  display: block;
+  /* Make the anchor behave like a block element to fill the entire li */
+  color: inherit;
+  /* Inherit the color from the li */
+  text-decoration: none;
+  /* Remove the default underline */
+  padding: 10px;
+  /* Ensure the anchor has the same padding as the li */
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .nev ul li:hover a {
-  background-color: #444;  /* Ensure the hover effect applies to the anchor */
-  transform: scale(1.05);  /* Scale effect on hover */
+  background-color: #444;
+  /* Ensure the hover effect applies to the anchor */
+  transform: scale(1.05);
+  /* Scale effect on hover */
   border-radius: 5px;
 }
 
@@ -236,10 +244,10 @@ body {
   /* Allow vertical scrolling */
   direction: ltr;
   /* Keep the scrollbar on the right */
-  
+
   border: 1px;
- 
-  
+
+
   /* background-color: red; */
   padding: 1rem;
   height: 68vh;
@@ -329,7 +337,7 @@ body {
 
 .message.ongoing {
   justify-content: flex-start;
-  
+
 }
 
 .message.incoming {
@@ -339,7 +347,7 @@ body {
 
 .message.ongoing {
   justify-content: flex-start;
-  
+
   /* User messages align left */
 }
 
@@ -425,7 +433,7 @@ body {
 
 /* Chat Input */
 .chat-input {
-  
+
   display: flex;
   width: calc(100% - 500px);
   padding: 10px;
@@ -449,6 +457,11 @@ body {
   z-index: 100;
   /* Ensure it's always above other content */
   /* box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.3); */
+}
+
+.fa-abhi2 {
+  margin-top: 20px;
+  display: none;
 }
 
 #chat-form {
@@ -478,9 +491,13 @@ body {
   /* Smooth transition */
 
 }
+
 #user-input::placeholder {
-  color: #ececec;; /* Change this to your desired color */
-  opacity: 1; /* Ensures full opacity in Firefox */
+  color: #ececec;
+  ;
+  /* Change this to your desired color */
+  opacity: 1;
+  /* Ensures full opacity in Firefox */
 }
 
 
@@ -514,20 +531,25 @@ body {
 .mic_media_button i:hover {
   color: #a1a0ff;
 }
+
 .message-content .text {
-  line-height: 1.9; /* Adjust this value for more or less spacing between lines */
-  margin-bottom: 10px; /* Adds space between consecutive messages */
+  line-height: 1.9;
+  /* Adjust this value for more or less spacing between lines */
+  margin-bottom: 10px;
+  /* Adds space between consecutive messages */
   padding: 5px 10px;
 }
 
 .message-content {
-  margin-bottom: 15px; /* Adds space between the message bubbles */
+  margin-bottom: 15px;
+  /* Adds space between the message bubbles */
 }
 
 .message-content .chat_icon {
   margin-right: 10px;
 }
-.mic_media_button i:active{
+
+.mic_media_button i:active {
   /* background-color: red; */
   color: #ffffff;
 
@@ -565,9 +587,10 @@ body {
 
 @media (max-width: 768px) {
   .sidebar {
-      width: 200px;
+    width: 200px;
   }
+
   .main-content {
-      margin-left: 200px;
+    margin-left: 200px;
   }
 }
