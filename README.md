@@ -2,7 +2,7 @@
 
 A personal AI assistant like Jarvis built with pure JavaScript, HTML, CSS, and Tailwind CSS. This mini-project integrates Large Language Models (LLMs) and Gemini for AI capabilities and features efficient API handling.
 
-![Personal AI Assistant](https://github.com/AbhishekRDJ/Personal-Ai-Assitant/assets/image.png)
+![Personal AI Assistant](https://github.com/AbhishekRDJ/Personal-Ai-Assitant/blob/main/assets/image.png)
 
 ## 📋 Overview
 
