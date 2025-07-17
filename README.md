@@ -1,3 +1,6 @@
+# DEPLOYED Link:
+## https://personal-ai-assitant.onrender.com/
+
 # Personal AI Assistant
 
 A personal AI assistant like Jarvis built with pure JavaScript, HTML, CSS, and Tailwind CSS. This mini-project integrates Large Language Models (LLMs) and Gemini for AI capabilities and features efficient API handling.
